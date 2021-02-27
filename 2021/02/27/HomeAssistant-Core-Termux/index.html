@@ -14,7 +14,7 @@
 <meta property="og:description" content="After playing with HomeAssistant on different devices, I’ve seen a post about installing HomeAssistant in Termux on an old Android device. (source). Don’t grab a coffee yet. You will have time while w">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2021-02-27T10:33:00.000Z">
-<meta property="article:modified_time" content="2021-02-27T13:03:21.962Z">
+<meta property="article:modified_time" content="2021-02-27T13:14:20.461Z">
 <meta property="article:author" content="Vladut Stefan">
 <meta name="twitter:card" content="summary">
     
@@ -105,7 +105,7 @@
 
     </div>
     <div id="toc">
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-Get-Termux-from-wherever-you-like"><span class="toc-number">1.</span> <span class="toc-text">1: Get Termux from wherever you like.</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-1-Optional-Install-sshd-or-dropbear"><span class="toc-number">2.</span> <span class="toc-text">1.1 (Optional) Install sshd or dropbear</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-Install-python-pip-etc"><span class="toc-number">3.</span> <span class="toc-text">2: Install python pip etc</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-Create-a-virtual-env-and-get-in"><span class="toc-number">4.</span> <span class="toc-text">3: Create a virtual env and get in</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-Install-clang-Pillow-and-libjpeg-turbo"><span class="toc-number">5.</span> <span class="toc-text">4: Install clang Pillow and libjpeg-turbo</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-Install-homeassistant-Finally"><span class="toc-number">6.</span> <span class="toc-text">5: Install homeassistant (Finally)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-Make-this-run-on-boot"><span class="toc-number">7.</span> <span class="toc-text">6: Make this run on boot</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#But-sir-I-have-errors"><span class="toc-number">8.</span> <span class="toc-text">But sir, I have errors!</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Versions-used-at-the-time"><span class="toc-number">9.</span> <span class="toc-text">Versions used at the time</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-Get-Termux-from-wherever-you-like"><span class="toc-number">1.</span> <span class="toc-text">1: Get Termux from wherever you like.</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-1-Optional-Install-sshd-or-dropbear"><span class="toc-number">2.</span> <span class="toc-text">1.1 (Optional) Install sshd or dropbear</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-Install-python-pip-etc"><span class="toc-number">3.</span> <span class="toc-text">2: Install python pip etc.</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-Create-a-virtual-env-and-get-in"><span class="toc-number">4.</span> <span class="toc-text">3: Create a virtual env and get in.</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-Install-clang-Pillow-and-libjpeg-turbo"><span class="toc-number">5.</span> <span class="toc-text">4: Install clang Pillow and libjpeg-turbo.</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-Install-homeassistant-Finally"><span class="toc-number">6.</span> <span class="toc-text">5: Install homeassistant (Finally).</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-Make-this-run-on-boot"><span class="toc-number">7.</span> <span class="toc-text">6: Make this run on boot.</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#But-sir-I-have-errors"><span class="toc-number">8.</span> <span class="toc-text">But sir, I have errors!</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Versions-used-at-the-time"><span class="toc-number">9.</span> <span class="toc-text">Versions used at the time.</span></a></li></ol>
     </div>
   </span>
 </div>
@@ -169,28 +169,28 @@
 <p>Find what user you are gonna use:</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ whoami</span><br><span class="line"></span><br><span class="line">u0_a162</span><br></pre></td></tr></table></figure>
 
-<p>Open dropbear in background</p>
+<p>Open dropbear in background:</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dropbear &amp;</span><br></pre></td></tr></table></figure>
 
-<p>Connect to your tablet from another computer (ssh port is 8022)</p>
+<p>Connect to your tablet from another computer (ssh port is 8022):</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh u0_a162@192.168.xxx.xxx -p 8022</span><br></pre></td></tr></table></figure>
 
 
-<h2 id="2-Install-python-pip-etc"><a href="#2-Install-python-pip-etc" class="headerlink" title="2: Install python pip etc"></a>2: Install python pip etc</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pkg install python -y</span><br></pre></td></tr></table></figure>
+<h2 id="2-Install-python-pip-etc"><a href="#2-Install-python-pip-etc" class="headerlink" title="2: Install python pip etc."></a>2: Install python pip etc.</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pkg install python -y</span><br></pre></td></tr></table></figure>
 <p>Yes. That simple. Termux decided to bind -dev and helper packages inside default packages name. So if you need python-dev, you just install python. </p>
-<h2 id="3-Create-a-virtual-env-and-get-in"><a href="#3-Create-a-virtual-env-and-get-in" class="headerlink" title="3: Create a virtual env and get in"></a>3: Create a virtual env and get in</h2><p>This is optional from a technical/functional perspective but for the sake of cleaness, do it!</p>
+<h2 id="3-Create-a-virtual-env-and-get-in"><a href="#3-Create-a-virtual-env-and-get-in" class="headerlink" title="3: Create a virtual env and get in."></a>3: Create a virtual env and get in.</h2><p>This is optional from a technical/functional perspective but for the sake of cleaness, do it!</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">python -m venv hass</span><br><span class="line">source hass&#x2F;bin&#x2F;activate</span><br></pre></td></tr></table></figure>
 
 <p>This should print back the name of your virtual env name before the $</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(hass) $ </span><br></pre></td></tr></table></figure>
 
 
-<p>When you want to exit just type </p>
+<p>When you want to exit just type:</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">deactivate</span><br></pre></td></tr></table></figure>
 
 
-<h2 id="4-Install-clang-Pillow-and-libjpeg-turbo"><a href="#4-Install-clang-Pillow-and-libjpeg-turbo" class="headerlink" title="4: Install clang Pillow and libjpeg-turbo"></a>4: Install clang Pillow and libjpeg-turbo</h2><p>Some HomeAssistant dependencies will fail to build without this.<br>I tried gcc but again, some packages complain.<br>I’m sure there is a way to fix those but meh, it was 12AM on a friday after week of work. </p>
-<p>(If you want to go down the gcc rabbit hole, here is a <a href="%5Bhttps://github.com/its-pointless/gcc_termux%5D" title="[Github repo]" target="">starting point</a>)</p>
+<h2 id="4-Install-clang-Pillow-and-libjpeg-turbo"><a href="#4-Install-clang-Pillow-and-libjpeg-turbo" class="headerlink" title="4: Install clang Pillow and libjpeg-turbo."></a>4: Install clang Pillow and libjpeg-turbo.</h2><p>Some HomeAssistant dependencies will fail to build without this.<br>I tried gcc but again, some packages complain.<br>I’m sure there is a way to fix those but meh, it was 12AM on a Friday after a week of work. </p>
+<p>(If you want to go down the gcc rabbit hole, here is a <a href="%5Bhttps://github.com/its-pointless/gcc_termux%5D" title="[Github repo]" target="">starting point</a>!)</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pkg install clang libjpeg-turbo -y</span><br></pre></td></tr></table></figure>
 
 <p>Pillow is (I think) a image library that HomeAssistant uses.<br>Don’t take my word for it. I saw the “image” keyword in the error and searched the internet.<br>Pillow depends on libjpeg.</p>
@@ -198,11 +198,14 @@
 
 <p>The LDFLAGS is the key here. (<a target="_blank" rel="noopener" href="https://wiki.termux.com/wiki/Image_Editors">https://wiki.termux.com/wiki/Image_Editors</a>)<br>-lm links the math library<br>-L links the system libraries..</p>
 <p>Don’t ask me why math is not a system library. Maybe the system had a stupid math teacher in Highschool, maybe it had a crush on math and it broke it’s heart. Or maybe beause of <a href="%5Bhttps://stackoverflow.com/questions/1033898/why-do-you-have-to-link-the-math-library-in-c%5D" title="[Stackoverflow]" target="">this</a>?</p>
-<h2 id="5-Install-homeassistant-Finally"><a href="#5-Install-homeassistant-Finally" class="headerlink" title="5: Install homeassistant (Finally)"></a>5: Install homeassistant (Finally)</h2><p>While in the virtual env</p>
+<h2 id="5-Install-homeassistant-Finally"><a href="#5-Install-homeassistant-Finally" class="headerlink" title="5: Install homeassistant (Finally)."></a>5: Install homeassistant (Finally).</h2><p>While in the virtual env</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install homeassistant</span><br></pre></td></tr></table></figure>
 
 <p>Go get/make a coffee. Don’t forget to link the coffee, water and electricity libraries and don’t use gcc. At least not this time.</p>
-<h2 id="6-Make-this-run-on-boot"><a href="#6-Make-this-run-on-boot" class="headerlink" title="6: Make this run on boot"></a>6: Make this run on boot</h2><h2 id="But-sir-I-have-errors"><a href="#But-sir-I-have-errors" class="headerlink" title="But sir, I have errors!"></a>But sir, I have errors!</h2><p>/data/data/com.termux/files/home/hass/include/site/python3.8/pillow</p>
+<h2 id="6-Make-this-run-on-boot"><a href="#6-Make-this-run-on-boot" class="headerlink" title="6: Make this run on boot."></a>6: Make this run on boot.</h2><h2 id="But-sir-I-have-errors"><a href="#But-sir-I-have-errors" class="headerlink" title="But sir, I have errors!"></a>But sir, I have errors!</h2><p>/data/data/com.termux/files/home/hass/include/site/python3.8/pillow</p>
+<ul>
+<li>The headers or library files could not be found for zlib,</li>
+</ul>
 <p>Clean your .cache folder.</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rm -rf ~&#x2F;.cache</span><br></pre></td></tr></table></figure>
 
@@ -216,9 +219,10 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">deactivate</span><br><span class="line">python -m venv --clear hass</span><br><span class="line">source &#x2F;hass&#x2F;bin&#x2F;activate</span><br></pre></td></tr></table></figure>
 
 <p>Continue with steps from point 4.</p>
-<p>ERROR: requests 2.25.1 has requirement idna&lt;3,&gt;=2.5, but you’ll have idna 3.1 which is incompatible. meh?</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ERROR: requests 2.25.1 has requirement idna&lt;3,&gt;&#x3D;2.5, but you&#39;ll have idna 3.1 which is incompatible.</span><br></pre></td></tr></table></figure>
+<p>Huh? meh.</p>
 <p>Format?<br>Grammar?</p>
-<h2 id="Versions-used-at-the-time"><a href="#Versions-used-at-the-time" class="headerlink" title="Versions used at the time"></a>Versions used at the time</h2><p>Termux : 0.83<br>clang:<br>pillow:<br>libjpeg-turbo:<br>homeassistant:</p>
+<h2 id="Versions-used-at-the-time"><a href="#Versions-used-at-the-time" class="headerlink" title="Versions used at the time."></a>Versions used at the time.</h2><p>Termux : 0.83<br>clang:<br>pillow: 8.1.0<br>libjpeg-turbo:<br>homeassistant:</p>
 
   </div>
 </article>
@@ -244,7 +248,7 @@
     </div>
 
     <div id="toc-footer" style="display: none">
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-Get-Termux-from-wherever-you-like"><span class="toc-number">1.</span> <span class="toc-text">1: Get Termux from wherever you like.</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-1-Optional-Install-sshd-or-dropbear"><span class="toc-number">2.</span> <span class="toc-text">1.1 (Optional) Install sshd or dropbear</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-Install-python-pip-etc"><span class="toc-number">3.</span> <span class="toc-text">2: Install python pip etc</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-Create-a-virtual-env-and-get-in"><span class="toc-number">4.</span> <span class="toc-text">3: Create a virtual env and get in</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-Install-clang-Pillow-and-libjpeg-turbo"><span class="toc-number">5.</span> <span class="toc-text">4: Install clang Pillow and libjpeg-turbo</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-Install-homeassistant-Finally"><span class="toc-number">6.</span> <span class="toc-text">5: Install homeassistant (Finally)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-Make-this-run-on-boot"><span class="toc-number">7.</span> <span class="toc-text">6: Make this run on boot</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#But-sir-I-have-errors"><span class="toc-number">8.</span> <span class="toc-text">But sir, I have errors!</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Versions-used-at-the-time"><span class="toc-number">9.</span> <span class="toc-text">Versions used at the time</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-Get-Termux-from-wherever-you-like"><span class="toc-number">1.</span> <span class="toc-text">1: Get Termux from wherever you like.</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-1-Optional-Install-sshd-or-dropbear"><span class="toc-number">2.</span> <span class="toc-text">1.1 (Optional) Install sshd or dropbear</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-Install-python-pip-etc"><span class="toc-number">3.</span> <span class="toc-text">2: Install python pip etc.</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-Create-a-virtual-env-and-get-in"><span class="toc-number">4.</span> <span class="toc-text">3: Create a virtual env and get in.</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-Install-clang-Pillow-and-libjpeg-turbo"><span class="toc-number">5.</span> <span class="toc-text">4: Install clang Pillow and libjpeg-turbo.</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-Install-homeassistant-Finally"><span class="toc-number">6.</span> <span class="toc-text">5: Install homeassistant (Finally).</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-Make-this-run-on-boot"><span class="toc-number">7.</span> <span class="toc-text">6: Make this run on boot.</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#But-sir-I-have-errors"><span class="toc-number">8.</span> <span class="toc-text">But sir, I have errors!</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Versions-used-at-the-time"><span class="toc-number">9.</span> <span class="toc-text">Versions used at the time.</span></a></li></ol>
     </div>
 
     <div id="share-footer" style="display: none">
