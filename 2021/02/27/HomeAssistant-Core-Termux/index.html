@@ -14,7 +14,7 @@
 <meta property="og:description" content="After playing with HomeAssistant on different devices, I’ve seen a post about installing HomeAssistant in Termux on an old Android device. (source). Don’t grab a coffee yet. You will have time while w">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2021-02-27T10:33:00.000Z">
-<meta property="article:modified_time" content="2021-02-27T12:54:24.415Z">
+<meta property="article:modified_time" content="2021-02-27T13:03:21.962Z">
 <meta property="article:author" content="Vladut Stefan">
 <meta name="twitter:card" content="summary">
     
@@ -154,11 +154,10 @@
 <li>FDroid</li>
 <li>etc</li>
 </ul>
-<p>(My installed version is 0.83 at the moment of writing this)</p>
 <h2 id="1-1-Optional-Install-sshd-or-dropbear"><a href="#1-1-Optional-Install-sshd-or-dropbear" class="headerlink" title="1.1 (Optional) Install sshd or dropbear"></a>1.1 (Optional) Install sshd or dropbear</h2><a href="%5Bhttps://wiki.termux.com/wiki/Remote_Access%5D" title="[Termux Wiki]" target="">Termux Docs</a>
 
 
-<p>I like to make my life complicated but this time I actually had 2 neurons free and they tought i should install something to ssh into Termux. But you can skip this and type every command from the tablet. (You sick fuck!)</p>
+<p>I like to make my life complicated but this time I actually had 2 neurons free and they thought I should install something to ssh into Termux. But you can skip this and type every command from the tablet. (You sick fuck!)</p>
 <p>I’ve decided to go with dropbear. No specific reason why.</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">pkg upgrade</span><br><span class="line">pkg install dropbear -y</span><br></pre></td></tr></table></figure>
 
@@ -197,16 +196,26 @@
 <p>Pillow is (I think) a image library that HomeAssistant uses.<br>Don’t take my word for it. I saw the “image” keyword in the error and searched the internet.<br>Pillow depends on libjpeg.</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">LDFLAGS&#x3D;&quot;-lm -L&#x2F;system&#x2F;lib&#x2F;&quot; CFLAGS&#x3D;&quot;-I&#x2F;data&#x2F;data&#x2F;com.termux&#x2F;files&#x2F;usr&#x2F;include&#x2F;&quot; \\</span><br><span class="line">pip install Pillow</span><br></pre></td></tr></table></figure>
 
-<p>The LDFLAGS is the key here. (<a target="_blank" rel="noopener" href="https://wiki.termux.com/wiki/Image_Editors">https://wiki.termux.com/wiki/Image_Editors</a>)<br>-lm links the math library to the compiler when the package gets built.<br>-L links the system libraries..</p>
+<p>The LDFLAGS is the key here. (<a target="_blank" rel="noopener" href="https://wiki.termux.com/wiki/Image_Editors">https://wiki.termux.com/wiki/Image_Editors</a>)<br>-lm links the math library<br>-L links the system libraries..</p>
 <p>Don’t ask me why math is not a system library. Maybe the system had a stupid math teacher in Highschool, maybe it had a crush on math and it broke it’s heart. Or maybe beause of <a href="%5Bhttps://stackoverflow.com/questions/1033898/why-do-you-have-to-link-the-math-library-in-c%5D" title="[Stackoverflow]" target="">this</a>?</p>
 <h2 id="5-Install-homeassistant-Finally"><a href="#5-Install-homeassistant-Finally" class="headerlink" title="5: Install homeassistant (Finally)"></a>5: Install homeassistant (Finally)</h2><p>While in the virtual env</p>
-<p>pip install homeassistant</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install homeassistant</span><br></pre></td></tr></table></figure>
+
 <p>Go get/make a coffee. Don’t forget to link the coffee, water and electricity libraries and don’t use gcc. At least not this time.</p>
 <h2 id="6-Make-this-run-on-boot"><a href="#6-Make-this-run-on-boot" class="headerlink" title="6: Make this run on boot"></a>6: Make this run on boot</h2><h2 id="But-sir-I-have-errors"><a href="#But-sir-I-have-errors" class="headerlink" title="But sir, I have errors!"></a>But sir, I have errors!</h2><p>/data/data/com.termux/files/home/hass/include/site/python3.8/pillow</p>
-<p>Clean your .cache folder.<br>rm -rf ~/.cache</p>
-<p>Optional: Clean your virtual env folder (this will delete every instaled package inside the virtual env)<br>python -m venv –clear hass</p>
+<p>Clean your .cache folder.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rm -rf ~&#x2F;.cache</span><br></pre></td></tr></table></figure>
+
+<p>Optional: Clean your virtual env folder (this will delete every instaled package inside the virtual env)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python -m venv --clear hass</span><br></pre></td></tr></table></figure>
+
+
+<p>Possible errors:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">(hass) $ python -m venv --clear hass</span><br><span class="line">Error: [Errno 40] Too many symbolic links encountered: &#39;&#x2F;data&#x2F;data&#x2F;com.termux&#x2F;files&#x2F;home&#x2F;hass&#x2F;bin&#x2F;python&#39;</span><br></pre></td></tr></table></figure>
+<p>Get out of the virtual env before cleaning it</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">deactivate</span><br><span class="line">python -m venv --clear hass</span><br><span class="line">source &#x2F;hass&#x2F;bin&#x2F;activate</span><br></pre></td></tr></table></figure>
+
 <p>Continue with steps from point 4.</p>
-<p>(hass) $ python -m venv –clear hass<br>Error: [Errno 40] Too many symbolic links encountered: ‘/data/data/com.termux/files/home/hass/bin/python’</p>
 <p>ERROR: requests 2.25.1 has requirement idna&lt;3,&gt;=2.5, but you’ll have idna 3.1 which is incompatible. meh?</p>
 <p>Format?<br>Grammar?</p>
 <h2 id="Versions-used-at-the-time"><a href="#Versions-used-at-the-time" class="headerlink" title="Versions used at the time"></a>Versions used at the time</h2><p>Termux : 0.83<br>clang:<br>pillow:<br>libjpeg-turbo:<br>homeassistant:</p>
