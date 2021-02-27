@@ -14,7 +14,7 @@
 <meta property="og:description" content="After playing with HomeAssistant on different devices, I’ve seen a post about installing HomeAssistant in Termux on an old Android device. (source). Don’t grab a coffee yet. You will have time while w">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2021-02-27T10:33:00.000Z">
-<meta property="article:modified_time" content="2021-02-27T13:24:31.325Z">
+<meta property="article:modified_time" content="2021-02-27T13:34:08.354Z">
 <meta property="article:author" content="Vladut Stefan">
 <meta name="twitter:card" content="summary">
     
@@ -151,11 +151,10 @@
 <p>But, after a night of searchings, HomeAssistant Core in Termux on old Android devices is doable or a tale of how to link math libs and other libs in clang on termux given you can find hints in error messages.</p>
 <h2 id="1-Get-Termux-from-wherever-you-like"><a href="#1-Get-Termux-from-wherever-you-like" class="headerlink" title="1: Get Termux from wherever you like."></a>1: Get Termux from wherever you like.</h2><ul>
 <li>PlayStore</li>
-<li>FDroid</li>
+<li>F-Droid</li>
 <li>etc</li>
 </ul>
 <h2 id="1-1-Optional-Install-sshd-or-dropbear"><a href="#1-1-Optional-Install-sshd-or-dropbear" class="headerlink" title="1.1 (Optional) Install sshd or dropbear"></a>1.1 (Optional) Install sshd or dropbear</h2><a href="%5Bhttps://wiki.termux.com/wiki/Remote_Access%5D" title="[Termux Wiki]" target="">Termux Docs</a>
-
 
 <p>I like to make my life complicated but this time I actually had 2 neurons free and they thought I should install something to ssh into Termux. But you can skip this and type every command from the tablet. (You sick fuck!)</p>
 <p>I’ve decided to go with dropbear. No specific reason why.</p>
@@ -202,10 +201,15 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install homeassistant</span><br></pre></td></tr></table></figure>
 
 <p>Go get/make a coffee. Don’t forget to link the coffee, water and electricity libraries and don’t use gcc. At least not this time.</p>
-<h2 id="6-Make-this-run-on-boot"><a href="#6-Make-this-run-on-boot" class="headerlink" title="6: Make this run on boot."></a>6: Make this run on boot.</h2><h2 id="But-sir-I-have-errors"><a href="#But-sir-I-have-errors" class="headerlink" title="But sir, I have errors!"></a>But sir, I have errors!</h2><ul>
-<li>The headers or library files could not be found for zlib</li>
-<li>Setup failed for image: Unable to import component: dlopen failed: cannot locate symbol “fmax” referenced by “_imaging.cpython-38.so”…</li>
+<h2 id="6-Make-this-run-on-boot"><a href="#6-Make-this-run-on-boot" class="headerlink" title="6: Make this run on boot."></a>6: Make this run on boot.</h2><ul>
+<li>Install the Termux:boot from PlayStore, F-Droid, etc.</li>
+<li>Create a file in ~/.termux/boot/</li>
 </ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">#! &#x2F;data&#x2F;data&#x2F;com.termux&#x2F;files&#x2F;usr&#x2F;bin&#x2F;sh</span><br><span class="line"></span><br><span class="line"># prevent system from sleeping</span><br><span class="line">termux-wake-lock</span><br><span class="line"></span><br><span class="line"># enable remote access</span><br><span class="line">dropbear</span><br><span class="line"></span><br><span class="line"># start MQTT in the background</span><br><span class="line">mosquitto -d</span><br><span class="line"></span><br><span class="line"># start home assistant in the background</span><br><span class="line">source ~&#x2F;hass&#x2F;bin&#x2F;activate</span><br><span class="line">hass --daemon</span><br><span class="line">deactivate</span><br><span class="line"></span><br><span class="line"># start node-red</span><br><span class="line">node-red</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="But-sir-I-have-errors"><a href="#But-sir-I-have-errors" class="headerlink" title="But sir, I have errors!"></a>But sir, I have errors!</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">##############</span><br><span class="line">The headers or library files could not be found for zlib</span><br><span class="line">##############</span><br><span class="line"></span><br><span class="line">#############</span><br><span class="line">Setup failed for image: Unable to import component: dlopen failed: cannot locate symbol &quot;fmax&quot; referenced by &quot;_imaging.cpython-38.so&quot;...</span><br><span class="line">#############</span><br></pre></td></tr></table></figure>
+
 <p>Remove pillow.</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip uninstall pillow</span><br></pre></td></tr></table></figure>
 
@@ -224,9 +228,8 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ERROR: requests 2.25.1 has requirement idna&lt;3,&gt;&#x3D;2.5, but you&#39;ll have idna 3.1 which is incompatible.</span><br></pre></td></tr></table></figure>
 <p>Huh? meh.</p>
 <p>Continue with steps from point 4.</p>
-<p>Format?<br>Grammar?</p>
-<h2 id="Versions-used-at-the-time"><a href="#Versions-used-at-the-time" class="headerlink" title="Versions used at the time."></a>Versions used at the time.</h2><p>Termux : 0.83<br>clang: 9.0.0<br>pillow: 8.1.0<br>libjpeg-turbo: 2.0.3-1<br>homeassistant: </p>
-<h2 id="One-huge-codeblock-to-rule-them-all"><a href="#One-huge-codeblock-to-rule-them-all" class="headerlink" title="One huge codeblock to rule them all."></a>One huge codeblock to rule them all.</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">pkg install python clang libjpeg-turbo -y</span><br><span class="line"></span><br><span class="line">python -m venv hass</span><br><span class="line">source hass&#x2F;bin&#x2F;activate</span><br><span class="line"></span><br><span class="line">LDFLAGS&#x3D;&quot;-lm -L&#x2F;system&#x2F;lib&#x2F;&quot; CFLAGS&#x3D;&quot;-I&#x2F;data&#x2F;data&#x2F;com.termux&#x2F;files&#x2F;usr&#x2F;include&#x2F;&quot; \\</span><br><span class="line">pip install Pillow</span><br><span class="line">pip install homeassistant</span><br><span class="line"></span><br><span class="line">hass -v</span><br></pre></td></tr></table></figure>
+<h2 id="Versions-used-at-the-time"><a href="#Versions-used-at-the-time" class="headerlink" title="Versions used at the time."></a>Versions used at the time.</h2><p>Termux : 0.83<br>clang: 9.0.0<br>pillow: 8.1.0<br>libjpeg-turbo: 2.0.3-1<br>homeassistant: 2021.2.3</p>
+<h2 id="One-huge-codeblock-to-rule-them-all"><a href="#One-huge-codeblock-to-rule-them-all" class="headerlink" title="One huge codeblock to rule them all."></a>One huge codeblock to rule them all.</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">pkg install python clang libjpeg-turbo nodejs mosquitto termux-api -y</span><br><span class="line"></span><br><span class="line">python -m venv hass</span><br><span class="line">source hass&#x2F;bin&#x2F;activate</span><br><span class="line"></span><br><span class="line">LDFLAGS&#x3D;&quot;-lm -L&#x2F;system&#x2F;lib&#x2F;&quot; CFLAGS&#x3D;&quot;-I&#x2F;data&#x2F;data&#x2F;com.termux&#x2F;files&#x2F;usr&#x2F;include&#x2F;&quot; \\</span><br><span class="line">pip install Pillow</span><br><span class="line">pip install homeassistant</span><br><span class="line"></span><br><span class="line">npm install node-red</span><br><span class="line">npm install node-red-contrib-home-assistant-websocket</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
   </div>
 </article>
